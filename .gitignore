@@ -3,12 +3,11 @@ build/
 __pycache__/
 *.pyc
 .DS_Store
-*.vcd
-xcelium.d/
-.bpad/
-*.log
 *.history
-
+*.svg
 # Preserve original run evidence even when it matches generated-file patterns.
 !history/**
 !results/verification/counter.vcd
+/scripts/
+/docs/
+/history/SHA256SUMS

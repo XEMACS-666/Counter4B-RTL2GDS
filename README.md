@@ -17,20 +17,66 @@ A rising-edge, modulo-16 counter in Verilog, with active-high synchronous reset 
 
 ## Project status
 
-The completed presentation milestone is **RTL and synthesis**. The full engineering record also includes Xcelium failures and exploratory Innovus placement, routing, DRC, and exports. Original evidence and newly performed verification are both included and labeled.
+**A 4-bit synchronous counter designed using the Cadence GPDK090 environment, with RTL, synthesis results, and an experimental physical implementation.**
 
-| Evidence | Status |
-| --- | --- |
-| Historical Xcelium simulation | Crashed at time zero after compilation/elaboration |
-| Historical Genus outputs | Netlist, constraints, timing, area, and power reports preserved |
-| Historical Innovus work | Layout and exports exist; failed attempts and timing-library limitations preserved |
-| New RTL simulation | 44 clock-edge checks pass |
-| New mapped-logic checks | 32/32 cases for each of three netlists |
-| New structure check | Netlist/DEF connectivity and GDS reference counts match; not LVS |
+The repository keeps the working files and the run history together: source code, scripts, reports, tool logs, failed attempts, and layout screenshots. The original Cadence runs date to September 17, 2026. Additional portable verification was performed on October 30, 2026.
 
-## At a glance
+| Stage | Recorded outcome |
+| :--- | :--- |
+| RTL simulation · Xcelium | Compilation and elaboration completed; simulation stopped with an internal exception at time zero. |
+| Logic synthesis · Genus | Mapped netlists, timing constraints, and area/timing/power reports were generated. |
+| Physical implementation · Innovus | Placement, routing, and physical exports were attempted. Layout views and exports exist, but timing setup remained incomplete. |
+| Additional verification | Saved results record 44 RTL clock-edge checks, 32 Boolean cases for each of three netlists, and a structural consistency check. |
 
-The counter increments on each rising clock edge and wraps from 15 to 0. When `rst` is high at a rising edge, the output becomes zero. Asserting reset between edges leaves the current output unchanged until the next rising edge.
+## Technology · GPDK090
+
+**This project used GPDK090, Cadence’s Generic 90 nm Process Design Kit environment.** The digital flow references GSCLIB090 standard-cell physical data and a typical-corner Liberty library. The process kit supplies technology context; the standard-cell library supplies the cells used to implement the counter.
+
+| Input | Role in this project | Evidence in the source |
+| :--- | :--- | :--- |
+| GPDK090 / 90 nm environment | Technology environment used for the project | Original scripts reference the lab’s `FOUNDRY/digital/90nm/dig/` installation. |
+| `typical.lib` | Supplies cell information used by Genus for mapping, timing, area, and power estimation | [`src/syn/syn.tcl`](src/syn/syn.tcl) |
+| `gsclib090_translated.lef` | Supplies physical library information read by Innovus for implementation | [`src/pnr/invs.tcl`](src/pnr/invs.tcl) |
+| `gsclib090site` | Placement-site name recorded for the standard cells | [`src/pnr/innovus_run.log9`](src/pnr/innovus_run.log9) |
+| Exported SDC | Records the 10 ns clock and other exported timing settings | [`counter_constraints.sdc`](src/syn/counter_constraints.sdc) |
+
+The Liberty and LEF files are referenced by their original lab paths; they are not bundled here. The precise PDK/library release is not established by this checkout. GPDK090 is a generic design environment; this project does not claim fabrication or silicon measurements.
+
+## The Cadence tools used here
+
+### 01 · Xcelium — simulate the logic
+
+Xcelium compiles the Verilog design and testbench, elaborates their hierarchy, and executes the testbench stimulus to check behavior over time. Here, `xrun` loaded the counter and its testbench, with read/write/connectivity access enabled.
+
+**What happened:** compilation and elaboration completed, but `xmsim` reported `INTERNAL EXCEPTION` at `0 FS + 0`. That session is a failed simulation attempt, not a passing waveform result. The original testbench is retained alongside a separate corrected testbench used for later Icarus verification.
+
+[RTL](src/rtl/counter.v) · [Original testbench](src/rtl/tb_counter.v) · [Run log](src/sim/xrun.log) · [Command history](src/sim/xrun.history)
+
+### 02 · Genus — turn RTL into standard cells
+
+Genus reads the RTL and cell library, elaborates the design, applies the clock constraint, then performs generic synthesis, technology mapping, and optimization. It translates the counter behavior into flip-flops and combinational gates from the available library.
+
+**What it produced:** a mapped Verilog netlist, exported SDC, and timing, area, and power reports. The saved mapping contains **four DFFQX1 flip-flops and ten combinational cells**. These outputs form the synthesis milestone of this project.
+
+[Script](src/syn/syn.tcl) · [Run log](src/syn/genus_run.log) · [Command history](src/syn/genus_run.cmd) · [Mapped netlist](src/syn/counter_netlist.v)
+
+### 03 · Innovus — place and route the mapped design
+
+Innovus takes the mapped netlist and physical library data into the physical-design flow. The saved script initializes the design, creates a floorplan, connects power and ground, adds power rings, places cells, routes connections, and requests Verilog, DEF, and GDS exports.
+
+**What happened:** the work progressed through several failed setup attempts to layout views and physical exports. Later logs still report physical-only initialization, missing timing constraints, and failure to build the timing graph because timing libraries were not loaded. The saved DRC report records no violations for its historical run; full physical sign-off and post-route timing closure are not established.
+
+[Script](src/pnr/invs.tcl) · [Later run log](src/pnr/innovus.log6) · [Command history](src/pnr/innovus.cmd6) · [Physical exports](src/gds/)
+
+## Counter behavior
+
+| Signal | Direction | Function |
+| :--- | :--- | :--- |
+| `clk` | Input | Updates the register on the rising edge. |
+| `rst` | Input | Active-high **synchronous** reset. |
+| `count[3:0]` | Output | Four-bit unsigned count, from 0 to 15. |
+
+At each rising edge, asserted reset sets the output to zero; otherwise the counter increments. Four-bit truncation wraps 15 back to 0. Reset asserted between rising edges takes effect at the next rising edge.
 
 ```verilog
 always @(posedge clk) begin
@@ -41,125 +87,125 @@ always @(posedge clk) begin
 end
 ```
 
-| Port | Direction | Meaning |
-| --- | --- | --- |
-| `clk` | Input | Rising-edge clock |
-| `rst` | Input | Active-high synchronous reset |
-| `count[3:0]` | Output | Unsigned count, 0–15 |
-
 ## Circuit diagrams
 
-![RTL-equivalent circuit](assets/counter-circuit.svg)
+The circuit consists of four state flip-flops with combinational increment and reset logic. The [mapped netlist](src/syn/counter_netlist.v) gives the exact cell instances and pin connections.
 
-*Functional circuit derived from the RTL: increment logic feeds four clocked D flip-flops; synchronous reset forces their D inputs to zero. Matching Q labels are feedback connections.*
-
-<details>
-<summary><strong>Actual mapped circuit: all 14 cells and pin-level net labels</strong></summary>
-
-![Mapped counter circuit](assets/mapped-circuit.svg)
-
-Generated from the [saved synthesis netlist](results/netlist/counter_netlist.v). Identical labels denote connected nets. This is a derived schematic, not a Cadence schematic screenshot.
-
-</details>
+For a connected schematic, use **[Yosys `show`](https://github.com/YosysHQ/yosys)** with suitable cell definitions, or the schematic view in the original EDA environment. For a manually arranged circuit illustration with standard symbols, **[Circuit Diagram](https://www.circuit-diagram.org/docs)** provides a web editor. A manually drawn figure should be labeled as an illustration; it does not verify the netlist.
 
 ## Simulation waveform
 
-![Actual simulation waveform](assets/simulation-waveform.svg)
+The saved [VCD trace](results/verification/counter.vcd) comes from the **corrected testbench run in Icarus Verilog**, not from the failed historical Xcelium session.
 
-The plot comes from the [new simulation VCD](results/verification/counter.vcd), showing the 15 → 0 rollover at 175 ns and reset assertion at 222 ns followed by clearing on the 225 ns rising edge. The original Xcelium session failed at time zero; this waveform comes from the corrected Icarus testbench.
+| Event in that trace | Time |
+| :--- | ---: |
+| Counter wraps from 15 to 0 | 175 ns |
+| Reset asserted between clock edges | 222 ns |
+| Count clears on the next rising edge | 225 ns |
 
-## Design flow
+Open the trace in **[Surfer](https://surfer-project.org/)** for a waveform view with signal grouping and time cursors, or **[GTKWave](https://gtkwave.github.io/gtkwave/)**. A useful capture includes `clk`, `rst`, `count`, and `expected`, with the rollover and reset intervals marked. Surfer also has a [VS Code extension](https://marketplace.visualstudio.com/items?itemName=surfer-project.surfer).
 
-![RTL through synthesis](assets/synthesis-flow.svg)
-
-This project documents RTL, synthesis, implementation experiments, failures, and independent checks. The saved netlist and synthesis reports are original artifacts from September 17, 2026; the portable scripts and self-checking testbench were prepared on October 30, 2026.
+The synthesized netlist additionally needs compatible Verilog definitions for its standard cells before it can be simulated. The saved Python checks use Boolean gate models; they are not technology-model gate-level timing simulations.
 
 ## Synthesis results
 
-![Report-derived synthesis results](assets/synthesis-results.svg)
+**Cadence Genus 21.14-s082_1 · typical operating conditions · historical reports**
 
-*Visualized from the saved reports, with original values and units retained.*
+| Measurement | Recorded value | Original report |
+| :--- | ---: | :--- |
+| Clock period constraint | **10 ns** · 100 MHz | [SDC](src/syn/counter_constraints.sdc) |
+| Mapped cell count | **14** | [Area](src/syn/area.rpt) |
+| Cell area | **99.911** library area units | [Area](src/syn/area.rpt) |
+| Setup slack on the displayed path | **+9586 ps** | [Timing](src/syn/timing.rpt) |
+| Estimated total power | **8.83596 µW** | [Power](src/syn/power.rpt) |
 
-Historical tool: **Cadence Genus 21.14-s082_1**, typical operating conditions.
+<details>
+<summary><strong>How to interpret these numbers</strong></summary>
 
-| Metric | Recorded result | Evidence |
-| --- | --- | --- |
-| Clock constraint | 10 ns (100 MHz) | [SDC](constraints/counter_constraints.sdc) |
-| Mapped cell count | 14: 4 flip-flops + 10 logic gates | [Netlist](results/netlist/counter_netlist.v) |
-| Cell area | 99.911 library area units | [Area report](results/reports/area.rpt) |
-| Reported setup slack | +9586 ps, displayed path | [Timing report](results/reports/timing.rpt) |
-| Estimated total power | 8.83596 µW | [Power report](results/reports/power.rpt) |
+- **100 MHz** describes the synthesis clock constraint, not a measured or post-route maximum frequency.
+- **Area** is reported in library units. The report does not establish the corresponding physical area unit.
+- **Power** is a historical tool estimate. Activity assumptions have not been established from the supplied evidence.
+- These results have not been regenerated with the original technology library in the preparation environment.
 
-The clock value is a synthesis constraint. Area units are not identified in the report; power is a tool estimate with unestablished activity assumptions. These figures have not been recomputed with the original technology library. See [synthesis details](docs/synthesis.md).
+</details>
 
-## Original Innovus screenshots
+## Physical implementation
+
+The original Innovus views show the power rings and internal routing. They document the implementation work alongside the corresponding logs.
 
 ![Innovus layout overview](assets/screenshots/innovus-layout-overview.png)
 
-*Original 14:12:25 overview, showing power rings and internal routing. The close-up is shown at the top of this README. All five original screenshots, including import/setup views, are in the [screenshot gallery](docs/screenshots.md).*
+*Original layout overview, September 17, 2026, 14:12:25.*
+
+![Zoomed Innovus layout overview](assets/screenshots/innovus-layout-overview_2.png)
+
+*Zoomed overview retained from this repository’s local edits.*
+
+</details>
 
 ## Failures and retries
 
-| Attempt | What happened | Original evidence |
-| --- | --- | --- |
-| Xcelium simulation | Internal exception at time zero | [xrun.log](history/counter_proj/sim/xrun.log) |
-| Innovus LEF loading | Undefined Metal1 / failed via creation; loading aborted | [innovus_run.log](history/counter_proj/pnr/innovus_run.log) |
-| Constraints command | `read_sdc` rejected | [innovus_run.log3](history/counter_proj/pnr/innovus_run.log3) |
-| Floorplan | `core` site invalid | [innovus_run.log4](history/counter_proj/pnr/innovus_run.log4) |
-| Power ring | Missing `-layer` argument | [innovus_run.log6](history/counter_proj/pnr/innovus_run.log6) |
-| Later physical run | Timing libraries missing; timing graph could not be built | [innovus.log6](history/counter_proj/pnr/innovus.log6) |
-| Historical DRC | Report says no violations for that run | [DRC report](history/counter_proj/pnr/counter.drc.rpt) |
+Run logs and command histories are part of the project evidence. They show what was executed, where setup failed, and how far each attempt progressed. File suffixes alone should not be treated as a reliable chronological order.
 
-Read the [failure and progress guide](docs/failures-and-progress.md) for more attempts, limitations, and evidence. The [complete run index](docs/run-index.md) includes repeated logs, verbose logs, command histories, reports, and crash diagnostics.
+<details>
+<summary><strong>Expand the recorded failures and implementation limitations</strong></summary>
 
-## Run locally
+| Attempt | Recorded issue | Original log |
+| :--- | :--- | :--- |
+| Xcelium simulation | Internal exception at time zero | [xrun.log](src/sim/xrun.log) |
+| Innovus technology loading | Undefined Metal1; via creation and LEF loading failed | [innovus_run.log](src/pnr/innovus_run.log) |
+| Constraint loading | `read_sdc` rejected in the recorded session | [innovus_run.log3](src/pnr/innovus_run.log3) |
+| Floorplan | `core` did not match a valid placement site | [innovus_run.log4](src/pnr/innovus_run.log4) |
+| Power ring | Required `-layer` argument missing | [innovus_run.log6](src/pnr/innovus_run.log6) |
+| DEF import attempt | `source` failed on `VERSION` | [innovus.log4](src/pnr/innovus.log4) |
+| Later implementation | Timing libraries missing; timing graph could not be built | [innovus.log6](src/pnr/innovus.log6) |
 
-Requirements: Python 3 for the netlist checker; Icarus Verilog (`iverilog` and `vvp`) and Make for RTL simulation.
+Later exports do not erase those errors. Physical-only initialization and incomplete timing/RC setup limit what can be concluded from the layout and routing results.
 
-```sh
-make sim       # Self-checking RTL simulation; writes build/sim/counter.vcd
-make verify    # 32 cases each: synthesis, alternate synthesis, routed netlists
-make structure # Netlist/DEF connectivity and GDS cell-reference checks
-make visuals   # Regenerate the simulation and documentation SVGs
-```
+</details>
 
-The RTL simulation checks 44 clock edges, counting, wraparound, and synchronous reset. The Python checker checks all 16 states with reset both low and high for each of three netlists using conventional Boolean gate models. It is not a foundry-model simulation or a formal equivalence proof. See [verification](docs/verification.md).
+**Browse the evidence:** [Xcelium files](src/sim/) · [Genus files](src/syn/) · [Innovus files](src/pnr/) · [Saved verification results](results/verification/)
 
-To run synthesis, provide a licensed Genus installation and a compatible Liberty library:
+## Reproduce the portable RTL check
+
+From the repository root, with Icarus Verilog installed:
 
 ```sh
-export COUNTER_LIB=/absolute/path/to/typical.lib
-make synthesis
+mkdir -p build/sim
+iverilog -g2012 -s tb_counter -o build/sim/counter_sim \
+  tb/tb_counter.v src/rtl/counter.v
+(cd build/sim && vvp counter_sim)
 ```
 
-New outputs go into ignored `build/`; the committed historical reports remain intact. The relocated synthesis script has not been executed in Genus in this preparation environment.
+This uses the corrected testbench and writes `build/sim/counter.vcd`. The original testbench remains in `src/rtl/` for comparison. Reproducing the original Cadence runs requires the licensed tools and matching library installation referenced in the source scripts.
 
-## Repository map
+The existing Makefile and some supporting documents still refer to the earlier directory layout. The command above follows the current layout; the historical evidence is linked directly throughout this README.
+
+## Repository guide
 
 ```text
-src/                    Synthesizable Verilog
-tb/                    Self-checking testbench
-scripts/synthesis/      Portable Genus entry point
-scripts/verification/   Boolean mapped-netlist checker
-constraints/            Saved synthesis constraints
-results/netlist/        Original mapped netlist
-results/reports/        Original timing, area, and power reports
-results/verification/   Checks run for this repository copy
-assets/                 Documentation diagrams
-docs/                   Design, failures, run index, gallery, verification
-history/counter_proj/   Original RTL, scripts, logs, reports, PNR/GDS outputs
-history/earlier-export-141216/  Earlier physical exports
+src/
+├── rtl/          Original counter RTL and testbench
+├── sim/          Xcelium logs and diagnostics
+├── syn/          Genus scripts, logs, netlists, constraints, reports
+├── pnr/          Innovus script, command histories, and run logs
+└── gds/          Physical exports
+
+results/          Selected reports and saved verification evidence
+constraints/      Selected exported timing constraints
+assets/           Screenshots and existing visual assets
+docs/             Supporting technical documentation
+history/          Remaining archive material and earlier exports
 ```
 
-## Read more
+## Visual authoring options
 
-- [Failures, retries, and evidence](docs/failures-and-progress.md)
-- [Complete run-log index](docs/run-index.md)
-- [Original screenshot gallery](docs/screenshots.md)
-- [Design and reset behavior](docs/design.md)
-- [Synthesis setup and report interpretation](docs/synthesis.md)
-- [Verification coverage and results](docs/verification.md)
-- [Artifact provenance and preparation changes](docs/provenance.md)
+| What to create | Where to create it | Suggested use here |
+| :--- | :--- | :--- |
+| Connected netlist schematic | [Yosys](https://github.com/YosysHQ/yosys) | Generate connectivity from Verilog; supply the cell definitions needed for the desired detail. |
+| Clean circuit illustration | [Circuit Diagram web editor](https://www.circuit-diagram.org/docs) | Arrange standard symbols, labels, and feedback paths manually. |
+| Simulation waveform | [Surfer](https://surfer-project.org/) or [GTKWave](https://gtkwave.github.io/gtkwave/) | Open the actual VCD, group signals, mark events, and capture the relevant interval. |
+| Layout figure | Original Innovus session | Capture consistent layer visibility, zoom, and instance labels alongside the relevant run. |
 
 ## License
 
