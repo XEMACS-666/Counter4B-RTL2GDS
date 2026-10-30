@@ -1,0 +1,3 @@
+Run date: 2026-10-30
+counter_netlist.v : PASS, 32/32 transitions; 4 DFFs on clk + 10 combinational gates
+Assumptions: standard Boolean gate meanings and positive-edge DFFQX1; no foundry models available.

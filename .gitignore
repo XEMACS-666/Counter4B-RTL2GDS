@@ -1,0 +1,10 @@
+# Local builds and tool-generated files
+build/
+__pycache__/
+*.pyc
+.DS_Store
+*.vcd
+xcelium.d/
+.bpad/
+*.log
+*.history
