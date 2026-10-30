@@ -1,3 +1,5 @@
-Run date: 2026-10-30
+python3 scripts/verification/check_logic.py
 counter_netlist.v : PASS, 32/32 transitions; 4 DFFs on clk + 10 combinational gates
+netlist.v : PASS, 32/32 transitions; 4 DFFs on clk + 10 combinational gates
+counter_routed.v : PASS, 32/32 transitions; 4 DFFs on clk + 10 combinational gates
 Assumptions: standard Boolean gate meanings and positive-edge DFFQX1; no foundry models available.

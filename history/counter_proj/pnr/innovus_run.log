@@ -1,0 +1,76 @@
+
+Cadence Innovus(TM) Implementation System.
+Copyright 2021 Cadence Design Systems, Inc. All rights reserved worldwide.
+
+Version:	v21.15-s110_1, built Fri Sep 23 13:08:12 PDT 2022
+Options:	-batch -files invs.tcl -log innovus_run.log 
+Date:		Thu Sep 17 13:28:50 2026
+Host:		tcevlsi.tce.edu (x86_64 w/Linux 4.18.0-553.83.1.el8_10.x86_64) (16cores*24cpus*13th Gen Intel(R) Core(TM) i7-13700 30720KB)
+OS:		Red Hat Enterprise Linux release 8.7(Ootpa)
+
+License:
+		[13:28:50.275865] Configured Lic search path (21.01-s002): 5280@14.139.1.126
+
+		invs	Innovus Implementation System	21.1	checkout succeeded
+		8 CPU jobs allowed with the current license(s). Use setMultiCpuUsage to set your required CPU count.
+Change the soft stacksize limit to 0.2%RAM (127 mbytes). Set global soft_stack_size_limit to change the value.
+
+**INFO:  MMMC transition support version v31-84 
+
+<CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+<CMD> suppressMessage ENCEXT-2799
+<CMD> getVersion
+[INFO] Loading PVS 22.20 fill procedures
+Sourcing file "invs.tcl" ...
+<CMD> set init_verilog ../syn/counter_netlist.v
+<CMD> set init_lef_file {/home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_tech.lef /home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_macro.lef}
+<CMD> set init_pwr_net VDD
+<CMD> set init_gnd_net VSS
+<CMD> init_design
+
+Loading LEF file /home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_tech.lef ...
+**ERROR: (IMPLF-111):	Layer 'Metal1' is not defined
+**ERROR: (IMPLF-224):	Failed to create via 'VIA1X'.
+**ERROR: (IMPLF-3):	Error found when processing LEF file '/home/install/FOUNDRY/digital/90nm/dig/lef/gsclib090_tech.lef'. The subsequent file content is ignored. Refer to error messages above for details. Fix the errors, and restart 'Innovus'.
+Type 'man IMPLF-3' for more detail.
+**ERROR: (IMPLF-26):	No technology information is defined in the first LEF file.
+Please rearrange the LEF file order and make sure the technology LEF file is the
+first one, exit and restart Innovus.
+**ERROR: (IMPLF-26):	No technology information is defined in the first LEF file.
+Please rearrange the LEF file order and make sure the technology LEF file is the
+first one, exit and restart Innovus.
+**ERROR: (IMPSYT-16013):	Loading LEF file(s) failed, and has aborted. Refer to error messages above for details. Please exit the tools and fix the errors first, then re-load design again.
+**ERROR: (IMPSYT-6692):	Invalid return code while executing 'invs.tcl' was returned and script processing was stopped. Review the following error in 'invs.tcl' then restart.
+Error info: invs.tcl: 
+    while executing
+"error $msg"
+    (procedure "apply_design" line 34)
+    invoked from within
+"apply_design $loadViewDefinition"
+    (procedure "init_design" line 405)
+    invoked from within
+"init_design"
+    (file "invs.tcl" line 6)
+    invoked from within
+"::se_source_orig invs.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel [concat ::se_source_orig $args]"
+    (procedure "source" line 188)
+    invoked from within
+"source invs.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 source invs.tcl"
+    ("eval" body line 1)
+    invoked from within
+"eval {uplevel #0 source invs.tcl}"
+    (in namespace inscope "::" script line 1)
+    invoked from within
+"namespace inscope :: eval "uplevel #0 source $fileName"".
+<CMD> win
+
+*** Memory Usage v#1 (Current mem = 1058.520M, initial mem = 483.887M) ***
+*** Message Summary: 0 warning(s), 7 error(s)
+
+--- Ending "Innovus" (totcpu=0:00:08.7, real=0:00:17.0, mem=1058.5M) ---

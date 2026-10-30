@@ -31,7 +31,7 @@ def parse(path):
   inst.append((typ,name,pins))
  return inst
 results=[]
-for filename in [netlist]:
+for filename in ([netlist] if len(sys.argv)>1 else [netlist, root/'history/counter_proj/syn/netlist.v', root/'history/counter_proj/pnr/counter_routed.v']):
  inst=parse(root/filename);ff=[x for x in inst if x[0]=='DFFQX1'];gates=[x for x in inst if x[0]!='DFFQX1']
  assert len(ff)==4 and len(gates)==10
  assert {p['Q'] for _,_,p in ff}=={f'count[{i}]' for i in range(4)}
@@ -52,7 +52,7 @@ for filename in [netlist]:
    expected=0 if rst else (state+1)%16
    rows.append({'state':state,'rst':rst,'netlist_next':nxt,'rtl_expected':expected,'match':nxt==expected})
  assert all(x['match'] for x in rows)
- results.append({'file':filename.name,'flipflops':len(ff),'gates':len(gates),'passing_cases':len(rows),'rows':rows})
+ results.append({'file':str(filename.relative_to(root)) if filename.is_relative_to(root) else filename.name,'flipflops':len(ff),'gates':len(gates),'passing_cases':len(rows),'rows':rows})
  print(filename.name,': PASS, 32/32 transitions; 4 DFFs on clk + 10 combinational gates')
 out=root/'build/verification'
 out.mkdir(parents=True,exist_ok=True)

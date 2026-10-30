@@ -1,6 +1,6 @@
 # Provenance and preparation changes
 
-The source package contained a recovered project tree, verification scripts, and a workflow handoff. This public copy selects the RTL, mapped synthesis netlist, exported constraints, and timing/area/power reports for a synthesis-focused presentation.
+The source package contained a recovered project tree, verification scripts, and a workflow handoff. This public copy includes the RTL and synthesis milestone together with original failed runs, implementation experiments, screenshots, and verification evidence.
 
 ## Preserved byte-for-byte
 
@@ -19,6 +19,10 @@ Their SHA-256 hashes are recorded in [SHA256SUMS](SHA256SUMS). From the reposito
 - Adapted the existing mapped-logic checker to the selected netlist and build output directory.
 - Added documentation, SVG diagrams, Make targets, and ignore rules.
 
-The input archive was not modified. The original simulation caches, crash dumps, repeated logs, reference videos and PDFs, physical-design files, and recovery bookkeeping remain outside this public copy. Documentation diagrams are explanatory illustrations, not tool screenshots.
+The input archive was not modified. Original repeated logs, text crash diagnostics, command histories, physical-design files, earlier exports, and the original testbench are preserved under `history/`. All five original screenshots are preserved under `assets/screenshots/`. Their hashes are recorded in `history/SHA256SUMS`.
+
+Compiled simulation caches, the binary process dump, reference videos/PDFs, and recovery bookkeeping remain in the source archive. See [history inventory](../history/README.md) for the exact exclusions. Generated diagrams are explanatory illustrations; the PNGs are original screenshots.
+
+The documentation revision restores the failure record, adds an evidence index and screenshot gallery, adds physical-artifact checks, and renders a circuit, mapped-cell schematic, actual simulation waveform, and report-derived results graphic.
 
 Historical synthesis results have not been regenerated in this environment. A license has not been selected by the owner.

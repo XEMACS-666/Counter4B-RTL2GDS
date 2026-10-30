@@ -15,3 +15,10 @@ verify:
 synthesis:
 	mkdir -p build/synthesis
 	cd build/synthesis && $(GENUS) -batch -files ../../scripts/synthesis/syn.tcl
+
+.PHONY: structure visuals
+structure:
+	$(PYTHON) scripts/verification/check_structure.py
+
+visuals: sim
+	$(PYTHON) scripts/visuals/render_visuals.py

@@ -1,0 +1,119 @@
+xrun(64): 22.09-s003: (c) Copyright 1995-2022 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	22.09-s003: Started on Sep 17, 2026 at 13:05:59 +0530
+xrun
+	../rtl/counter.v
+	../rtl/tb_counter.v
+	-access +rwc
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xmvlog: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xmvlog: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+file: ../rtl/counter.v
+	module worklib.counter:v
+		errors: 0, warnings: 0
+file: ../rtl/tb_counter.v
+	module worklib.tb_counter:v
+		errors: 0, warnings: 0
+	Total errors/warnings found outside modules and primitives:
+		errors: 0, warnings: 2
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xrun: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xrun: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+DEFINE Jamar /root/Jamar
+|
+xmelab: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xmelab: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		tb_counter
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+DEFINE Jamar /root/Jamar
+|
+xmvlog_cg: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xmvlog_cg: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+		worklib.counter:v <0x4b3df36f>
+			streams:   2, words:   490
+		worklib.tb_counter:v <0x2d550c9d>
+			streams:   6, words:  4416
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		             Instances  Unique
+		Modules:             2       2
+		Registers:           3       3
+		Scalar wires:        2       -
+		Vectored wires:      1       -
+		Always blocks:       2       2
+		Initial blocks:      2       2
+		Pseudo assignments:  2       2
+	Writing initial simulation snapshot: worklib.tb_counter:v
+DEFINE Jamar /root/Jamar
+|
+xmsim: *W,DLCPTH (/root/cds.lib,8): cds.lib Invalid path '/root/Jamar' (cds.lib command ignored).
+DEFINE Kamalin /root/Kamalin
+|
+xmsim: *W,DLCPTH (/root/cds.lib,9): cds.lib Invalid path '/root/Kamalin' (cds.lib command ignored).
+Loading snapshot worklib.tb_counter:v .................... Done
+xcelium> run
+xmsim: *F,INTERR: INTERNAL EXCEPTION
+Observed simulation time : 0 FS + 0
+-----------------------------------------------------------------
+The tool has encountered an unexpected condition and must exit.
+Contact Cadence Design Systems customer support about this
+problem and provide enough information to help us reproduce it,
+including the logfile that contains this error message.
+  TOOL:	xmsim(64)	22.09-s003
+  HOSTNAME: tcevlsi.tce.edu
+  OPERATING SYSTEM: Linux 4.18.0-553.83.1.el8_10.x86_64 #1 SMP Tue Nov 11 20:51:18 UTC 2025 x86_64
+  MESSAGE: T(0): sv_seghandler - trapno -1 addr(0x459bacc)
+	Stream rts_xfer
+-----------------------------------------------------------------
+csi-xmsim - CSI: Cadence Support Investigation, sending details to /root/RTLGDS/counter_proj/sim/xmsim_13737.err
+csi-xmsim - CSI: investigation complete, send /root/RTLGDS/counter_proj/sim/xmsim_13737.err to Cadence Support

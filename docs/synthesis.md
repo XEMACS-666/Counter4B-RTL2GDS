@@ -14,4 +14,4 @@ The original script created the 10 ns clock directly. The prepared script reads 
 - **Area:** The report records 14 cells with cell area 99.911. The library's physical area unit is unavailable, so square micrometres are not asserted.
 - **Power:** The subtotal is 8.83596e-6 W. It is an estimate; stimulus/activity assumptions have not been established.
 
-The scope ends at synthesis. PNR, GDS, physical verification, and silicon measurement are outside this repository's claims.
+The scope ends at synthesis. Exploratory PNR/GDS artifacts and historical DRC evidence are included under `history/`. They do not establish physical sign-off, post-route timing closure, or silicon measurement. See [failures and progress](failures-and-progress.md).

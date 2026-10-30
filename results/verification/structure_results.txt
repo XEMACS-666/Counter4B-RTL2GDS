@@ -1,0 +1,249 @@
+python3 scripts/verification/check_structure.py
+NETLISTS equal? True 14 pin connections 45
+DEF components exact match? True
+DEF nets exact match? True nets 16
+GDS standard cell references 14 Counter({'NOR2XL': 5, 'DFFQX1': 4, 'AOI21XL': 1, 'OAI21XL': 1, 'NOR3X1': 1, 'NAND2XL': 1, 'AND2X1': 1})
+Expected Counter({'NOR2XL': 5, 'DFFQX1': 4, 'AOI21XL': 1, 'OAI21XL': 1, 'NOR3X1': 1, 'NAND2XL': 1, 'AND2X1': 1})
+[
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "DFFQX1",
+    "strans": 32768,
+    "angle_hex": "42b4000000000000",
+    "xy": [
+      16240,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR2XL",
+    "strans": 32768,
+    "angle_hex": "42b4000000000000",
+    "xy": [
+      18560,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "DFFQX1",
+    "strans": 32768,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      14210,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR2XL",
+    "strans": 0,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      18560,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "AOI21XL",
+    "strans": 32768,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      16240,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "DFFQX1",
+    "strans": 32768,
+    "angle_hex": "42b4000000000000",
+    "xy": [
+      17400,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "OAI21XL",
+    "strans": 32768,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      14500,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR2XL",
+    "strans": 0,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      16240,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR3X1",
+    "strans": 0,
+    "angle_hex": "42b4000000000000",
+    "xy": [
+      21460,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "DFFQX1",
+    "strans": 0,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      17400,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NAND2XL",
+    "strans": 0,
+    "angle_hex": "42b4000000000000",
+    "xy": [
+      14500,
+      17980
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR2XL",
+    "strans": 0,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      20880,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "NOR2XL",
+    "strans": 0,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      19720,
+      12760
+    ]
+  },
+  {
+    "cell": "counter",
+    "kind": 10,
+    "sname": "AND2X1",
+    "strans": 32768,
+    "angle_hex": "0000000000000000",
+    "xy": [
+      17980,
+      17980
+    ]
+  }
+]
+DEF comps {
+  "count_reg[3]": [
+    "DFFQX1",
+    20300,
+    25520,
+    "FN"
+  ],
+  "g81__2398": [
+    "NOR2XL",
+    34800,
+    25520,
+    "FN"
+  ],
+  "count_reg[2]": [
+    "DFFQX1",
+    28420,
+    20300,
+    "FS"
+  ],
+  "g85__5107": [
+    "NOR2XL",
+    37120,
+    25520,
+    "N"
+  ],
+  "g83__6260": [
+    "AOI21XL",
+    32480,
+    30740,
+    "FS"
+  ],
+  "count_reg[1]": [
+    "DFFQX1",
+    22620,
+    35960,
+    "FN"
+  ],
+  "g87__4319": [
+    "OAI21XL",
+    29000,
+    30740,
+    "FS"
+  ],
+  "g84__8428": [
+    "NOR2XL",
+    32480,
+    25520,
+    "N"
+  ],
+  "g89__5526": [
+    "NOR3X1",
+    39440,
+    30740,
+    "S"
+  ],
+  "count_reg[0]": [
+    "DFFQX1",
+    34800,
+    35960,
+    "N"
+  ],
+  "g88__6783": [
+    "NAND2XL",
+    26680,
+    30740,
+    "S"
+  ],
+  "g91__3680": [
+    "NOR2XL",
+    41760,
+    25520,
+    "N"
+  ],
+  "g92__1617": [
+    "NOR2XL",
+    39440,
+    25520,
+    "N"
+  ],
+  "g93__2802": [
+    "AND2X1",
+    35960,
+    30740,
+    "FS"
+  ]
+}
+PASS: netlist connections, DEF signal endpoints, and GDS cell-type counts. Not LVS or geometry equivalence.

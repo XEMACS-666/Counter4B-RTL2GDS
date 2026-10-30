@@ -8,3 +8,7 @@ xcelium.d/
 .bpad/
 *.log
 *.history
+
+# Preserve original run evidence even when it matches generated-file patterns.
+!history/**
+!results/verification/counter.vcd
