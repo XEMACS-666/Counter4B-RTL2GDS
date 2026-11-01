@@ -1,10 +1,11 @@
-![4-bit counter layout in Cadence Innovus](assets/screenshots/innovus-layout-detail.png)
-
 <div align="center">
 
 # 4-Bit Synchronous Counter
 
 **Verilog RTL · Cadence Genus · Cadence Innovus · GPDK090**
+
+![4-bit counter layout in Cadence Innovus](assets/screenshots/innovus-layout-detail.png)
+
 
 A modulo-16 counter with an active-high synchronous reset, taken through synthesis and physical implementation using the **GPDK090 90 nm library environment**.
 
@@ -62,6 +63,12 @@ Saved Genus reports at typical operating conditions, before physical layout:
 | Estimated total power | 8.836 µW | [Power](results/power.rpt) |
 
 The clock value is a synthesis target; power is a tool estimate.
+
+## Netlist
+
+![4 Bit Synchronous counter netlists](assets/counter_netlist.svg)
+
+Generic PDK 90nm process Netlists in Gate Level and Flip-Flop level.
 
 ### Timing path
 
