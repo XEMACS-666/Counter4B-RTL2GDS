@@ -1,4 +1,0 @@
-# Preserve archived bytes and exclude historical tool files from language statistics.
-history/** -text linguist-vendored=true
-assets/** -text
-results/** -text linguist-generated=true

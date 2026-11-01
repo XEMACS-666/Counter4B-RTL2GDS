@@ -1,4 +1,0 @@
-Run date: 2026-10-30
-VCD info: dumpfile counter.vcd opened for output.
-PASS: 44 clock-edge checks; synchronous reset, increment, wraparound
-tb/tb_counter.v:38: $finish called at 440000 (1ps)
