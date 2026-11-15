@@ -1,5 +1,19 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101310"><meta name="description" content="XEMACS project notebook: a 4-bit synchronous counter, from Verilog RTL to physical layout."><link rel="icon" type="image/svg+xml" href="website/favicon.svg"><title>Counter4B-RTL2GDS · XEMACS</title><link rel="stylesheet" href="website/style.css"><script src="website/app.js" defer></script></head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101310"><meta name="description" content="XEMACS project notebook: a 4-bit synchronous counter, from Verilog RTL to physical layout."><link rel="icon" type="image/svg+xml" href="website/favicon.svg"><title>Counter4B-RTL2GDS · XEMACS</title><link rel="stylesheet" href="website/style.css"><script src="website/app.js" defer></script><meta property="og:type" content="website">
+<meta property="og:title" content="Counter4B-RTL2GDS · XEMACS">
+<meta property="og:description" content="XEMACS project notebook: a 4-bit synchronous counter, from Verilog RTL to physical layout.">
+<meta property="og:url" content="https://xemacs-666.github.io/4Bit-Synchronous-Counter/">
+<meta property="og:image" content="https://xemacs-666.github.io/4Bit-Synchronous-Counter/website/social-preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="XEMACS — 4-bit synchronous counter">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Counter4B-RTL2GDS · XEMACS">
+<meta name="twitter:description" content="XEMACS project notebook: a 4-bit synchronous counter, from Verilog RTL to physical layout.">
+<meta name="twitter:image" content="https://xemacs-666.github.io/4Bit-Synchronous-Counter/website/social-preview.png">
+<meta name="twitter:image:alt" content="XEMACS — 4-bit synchronous counter">
+</head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="#overview"><img src="website/logo.svg" alt="" class="logo" width="28" height="28"><span>XEMACS</span><span class="slash">/</span><span class="repo">Counter4B-RTL2GDS</span></a><span class="header-links"><a class="github" href="README.md">README ↗</a><span class="slash">/</span><a class="github" href="https://github.com/XEMACS-666/4Bit-Synchronous-Counter" target="_blank" rel="noreferrer">Repository ↗</a></span></header>
 <div class="shell"><aside><div class="nav-label">PROJECT NOTEBOOK <span>01</span></div><nav aria-label="Sections"><a href="#overview" class="active"><span class="nav-text">Overview</span> <span>01</span></a><a href="#logic"><span class="nav-text">Counter logic</span> <span>02</span></a><a href="#flow"><span class="nav-text">RTL → GDS</span> <span>03</span></a><a href="#results"><span class="nav-text">Synthesis results</span> <span>04</span></a><a href="#layout"><span class="nav-text">Physical layout</span> <span>05</span></a><a href="#files"><span class="nav-text">Files & revisit</span> <span>06</span></a></nav><div class="aside-note"><i></i> A small design.<br>A complete flow to revisit.<p>VERILOG / GPDK090 / 90 NM</p></div></aside>
